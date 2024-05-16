@@ -10,12 +10,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.IzaiasValentim.donationapi.entity.User;
 
-public class userUserDetails implements UserDetails {
+public class UserUserDetails implements UserDetails {
 
     private final User baseUser;
 
     @Autowired
-    public userUserDetails(User baseUser) {
+    public UserUserDetails(User baseUser) {
         this.baseUser = baseUser;
     }
 
