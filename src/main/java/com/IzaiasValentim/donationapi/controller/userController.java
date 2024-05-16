@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping(value="managers")
-public class userController {
+public class UserController {
 
     @GetMapping("/say-hello")
     public String securedHelloWorld() {
