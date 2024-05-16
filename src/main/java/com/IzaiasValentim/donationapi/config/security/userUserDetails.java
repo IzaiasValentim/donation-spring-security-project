@@ -1,14 +1,16 @@
 package com.IzaiasValentim.donationapi.config.security;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.IzaiasValentim.donationapi.entity.User;
 
-public class userUserDetails implements UserDetails{
+public class userUserDetails implements UserDetails {
 
     private final User baseUser;
 
@@ -19,7 +21,14 @@ public class userUserDetails implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        var rolesUser = baseUser.getRoles();
+
+        var authorities = new HashSet<GrantedAuthority>(rolesUser.size());
+
+        rolesUser.forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        });
+        return authorities;
     }
 
     @Override
@@ -29,7 +38,7 @@ public class userUserDetails implements UserDetails{
 
     @Override
     public String getUsername() {
-       return baseUser.getUsername();
+        return baseUser.getUsername();
     }
 
     @Override
@@ -51,5 +60,5 @@ public class userUserDetails implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
-    
+
 }
