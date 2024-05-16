@@ -6,4 +6,8 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="ROLES")
 public class Role {
+    
+    private Long id;
+    private String name;
+    
 }
