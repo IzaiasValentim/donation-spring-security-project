@@ -12,8 +12,13 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "DONATIONS")
 public class Donation {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_donation")
     private Long id;
+    @Column(name = "donor")
     private String donor_Name;
+    @Column(name = "number")
     private String phone;
     private String email;
     private Double value;
@@ -23,4 +28,5 @@ public class Donation {
     private LocalDateTime created;
     private LocalDateTime validationTime;
     private User userOfValidation;
+
 }
