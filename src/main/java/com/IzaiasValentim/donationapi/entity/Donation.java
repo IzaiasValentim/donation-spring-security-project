@@ -12,28 +12,47 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "DONATIONS")
+@Table(name = "DONATIONS__")
 public class Donation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_donation")
+    @Column(name = "donation_id")
     private Long id;
     @Column(name = "donor")
     private String donor_Name;
     @Column(name = "number")
     private String phone;
     private String email;
-    private Double value;
+    @Column(name = "amount")
+    private Double amountDonated;
     private String transferVoucher;
     private Boolean anonymous;
     private Boolean verified;
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column(name = "creation_date", updatable = false)
     private LocalDateTime created;
+    @Column(name = "validation_date")
     private LocalDateTime validationTime;
-    private User userOfValidation;
+    @Column(name = "username_employee")
+    private String verificationUserUsername;
 
     public Donation() {
+    }
+
+    public Donation(Long id, String donor_Name, String phone, String email, Double amountDonated, String transferVoucher,
+            Boolean anonymous, Boolean verified, LocalDateTime created, LocalDateTime validationTime,
+            String verificationUserUsername) {
+        this.id = id;
+        this.donor_Name = donor_Name;
+        this.phone = phone;
+        this.email = email;
+        this.amountDonated = amountDonated;
+        this.transferVoucher = transferVoucher;
+        this.anonymous = anonymous;
+        this.verified = verified;
+        this.created = created;
+        this.validationTime = validationTime;
+        this.verificationUserUsername = verificationUserUsername;
     }
 
     public Long getId() {
@@ -68,12 +87,12 @@ public class Donation {
         this.email = email;
     }
 
-    public Double getValue() {
-        return value;
+    public Double getAmountDonated() {
+        return amountDonated;
     }
 
-    public void setValue(Double value) {
-        this.value = value;
+    public void setAmountDonated(Double amountDonated) {
+        this.amountDonated = amountDonated;
     }
 
     public String getTransferVoucher() {
@@ -116,12 +135,12 @@ public class Donation {
         this.validationTime = validationTime;
     }
 
-    public User getUserOfValidation() {
-        return userOfValidation;
+    public String getVerificationUserUsername() {
+        return verificationUserUsername;
     }
 
-    public void setUserOfValidation(User userOfValidation) {
-        this.userOfValidation = userOfValidation;
+    public void setVerificationUserUsername(String verificationUserUsername) {
+        this.verificationUserUsername = verificationUserUsername;
     }
 
 }
