@@ -6,9 +6,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.service.annotation.GetExchange;
 
 import com.IzaiasValentim.donationapi.entity.Donation;
+import com.IzaiasValentim.donationapi.entity.dto.DonationViewDTO;
 import com.IzaiasValentim.donationapi.service.DonationService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("donations")
@@ -21,8 +25,9 @@ public class DonationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Donation>> getAllDonations() {
-        return ResponseEntity.ok().body(donationService.getAllDonations());
+    public ResponseEntity<List<DonationViewDTO>> getAllDonationsPublicView() {
+        return ResponseEntity.ok().body(donationService.getAllDonationPublicView());
     }
+    
 
 }
