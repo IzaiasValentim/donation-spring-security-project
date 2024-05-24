@@ -1,6 +1,7 @@
 package com.IzaiasValentim.donationapi.entity.dto;
 
 import com.IzaiasValentim.donationapi.entity.Donation;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class DonationCreationDTO {
     private String donor_Name;
@@ -61,7 +62,18 @@ public class DonationCreationDTO {
         this.transferVoucher = transferVoucher;
     }
 
-    Donation dtoToDonation() {
+    @JsonIgnore
+    public Boolean isNotBlank() {
+        if (this.getAnonymous() == false) {
+            if (this.getDonor_Name().isBlank() || this.getEmail().isBlank()
+                    || this.getTransferVoucher().isBlank() || this.getAmountDonated().equals(0.0)) return false;
+        } else {
+            if (this.getTransferVoucher().isBlank() || this.getAmountDonated().equals(0.0)) return false;
+        }
+        return true;
+    }
+
+    public Donation dtoToDonation() {
         Donation donatioRetured = new Donation();
         donatioRetured.setAmountDonated(this.getAmountDonated());
         donatioRetured.setTransferVoucher(this.getTransferVoucher());
