@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         (auth) -> auth
                                 .requestMatchers(HttpMethod.GET,"donations").permitAll()
+                                .requestMatchers(HttpMethod.POST,"donations/donate/").permitAll()
                                 .requestMatchers("authenticate/").permitAll()
                                 .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
