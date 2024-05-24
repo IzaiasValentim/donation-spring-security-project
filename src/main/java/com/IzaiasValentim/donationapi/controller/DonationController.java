@@ -5,17 +5,16 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.service.annotation.GetExchange;
 
 import com.IzaiasValentim.donationapi.entity.Donation;
 import com.IzaiasValentim.donationapi.entity.dto.DonationCreationDTO;
 import com.IzaiasValentim.donationapi.entity.dto.DonationViewDTO;
 import com.IzaiasValentim.donationapi.service.DonationService;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -39,6 +38,13 @@ public class DonationController {
     public ResponseEntity<List<DonationViewDTO>> getAllDonationsPublicView() {
         return ResponseEntity.ok().body(donationService.getAllDonationPublicView());
     }
+
+    @GetMapping("/totalOfDonations")
+    public ResponseEntity<Double> getMethodName(@RequestParam(required = false) Boolean aproved) {
+        if(aproved ==null)aproved=false;
+        return ResponseEntity.ok().body(donationService.getTotalDoanted(aproved));
+    }
+    
     
     @PostMapping("/donate/")
     public ResponseEntity<DonationViewDTO> postMethodName(@RequestBody DonationCreationDTO donationToSave) {
