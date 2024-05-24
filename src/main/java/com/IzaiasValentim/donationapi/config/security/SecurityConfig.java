@@ -38,7 +38,7 @@ public class SecurityConfig {
         httpSecurity.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
                         (auth) -> auth
-                                .requestMatchers(HttpMethod.GET,"donations").permitAll()
+                                .requestMatchers(HttpMethod.GET,"donations", "donations/totalOfDonations/**").permitAll()
                                 .requestMatchers(HttpMethod.POST,"donations/donate/").permitAll()
                                 .requestMatchers("authenticate/").permitAll()
                                 .anyRequest().authenticated())
