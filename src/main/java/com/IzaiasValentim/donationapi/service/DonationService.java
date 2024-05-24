@@ -1,6 +1,7 @@
 package com.IzaiasValentim.donationapi.service;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,4 +77,21 @@ public class DonationService {
 
         return totalDoanted;
     }
+    
+    @Transactional
+    public ResponseEntity<Donation> donationVerification(Long idDonation, String manangerUsername) {
+
+        Donation donationReturned = donationRepository.findById(idDonation).get();
+
+        if (donationReturned != null) {
+            donationReturned.setVerified(true);
+            donationReturned.setValidationTime(LocalDateTime.now());
+            donationReturned.setVerificationUserUsername(manangerUsername);
+
+            return ResponseEntity.ok().body(donationRepository.save(donationReturned));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
 }
