@@ -41,13 +41,13 @@ public class DonationService {
     }
 
     @Transactional
-    public ResponseEntity<DonationViewDTO> saveDonation(DonationCreationDTO donation){
+    public ResponseEntity<DonationViewDTO> saveDonation(DonationCreationDTO donation) {
         Donation donationToSave = donation.dtoToDonation();
         donationToSave.setValidationTime(null);
         donationToSave.setVerificationUserUsername("Not yet validated.");
         donationRepository.save(donationToSave);
-        
-        DonationViewDTO donationReturned   = new DonationViewDTO(donationToSave);
+
+        DonationViewDTO donationReturned = new DonationViewDTO(donationToSave);
 
         URI readerLocation = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -55,5 +55,25 @@ public class DonationService {
                 .buildAndExpand(donationToSave.getId())
                 .toUri();
         return ResponseEntity.created(readerLocation).body(donationReturned);
+    }
+
+    public Double getTotalDoanted(Boolean aprovated) {
+
+        var allDonations = getAllDonations();
+        Double totalDoanted = 0.0;
+
+        if (aprovated == true) {
+            for (var donation : allDonations) {
+                if (donation.getVerified() == true)
+                    totalDoanted += donation.getAmountDonated();
+            }
+            return totalDoanted;
+        } else {
+            for (var donation : allDonations) {
+                totalDoanted += donation.getAmountDonated();
+            }
+        }
+
+        return totalDoanted;
     }
 }
